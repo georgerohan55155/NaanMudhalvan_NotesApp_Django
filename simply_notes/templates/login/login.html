@@ -1,0 +1,70 @@
+{% extends 'layout/layout.html' %}
+
+{% block title %}
+Login | Noter
+{% endblock title %}
+
+{% block Style %}
+<style>
+    /* Add border styles for form fields */
+    input[type="text"],
+    input[type="password"],
+    input[type="email"] {
+        border: 1px solid #ced4da; /* Border color */
+        border-radius: 0.25rem; /* Border radius */
+        padding: 0.375rem 0.75rem; /* Padding */
+        width: 100%; /* Full width */
+    }
+
+    /* Add focus styles for form fields */
+    input[type="text"]:focus,
+    input[type="password"]:focus,
+    input[type="email"]:focus {
+        border-color: #80bdff; /* Border color on focus */
+        outline: 0; /* Remove outline */
+        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25); /* Add shadow on focus */
+    }
+
+</style>
+{% endblock Style %}
+
+{% block content %}
+
+<nav class="bg-gray-200 shadow shadow-gray-300 w-100 px-8 md:px-auto">
+    <div class="md:h-16 h-28 mx-auto md:px-4 container flex items-center justify-between flex-wrap md:flex-nowrap">
+        <!-- Logo -->
+        <a href="/" class="text-green-500 ml-[5%] text-[20px] font-bold md:order-1">
+            <!-- Heroicon - Chip Outline -->
+            <p>Noter</p>
+        </a>
+
+        <div class="order-2 flex gap-3 md:order-3">
+            <a href="/signup/" class="px-4 py-2 bg-green-500 hover:bg-green-600 text-gray-50 rounded-xl flex items-center gap-2">
+                <!-- Heroicons - Login Solid -->
+                
+                <span>Signup</span>
+            </a>
+        </div>
+    </div>
+</nav>
+
+
+<div class=" flex flex-col items-center justify-center my-8 ">
+    <div class="bg-white p-6 rounded flex items-center justify-center flex-col shadow-md w-[30%] border-green-500 border ">
+        <!-- <img src='/notes/login.gif' alt="Welcome" width="200px" class="mb-4"> -->
+        <h2 class="text-2xl font-semibold mb-6 text-center">Login</h2>
+        <form method="post">
+            {% csrf_token %}
+            {% for field in form %}
+                <div class="mb-3 ">
+                    <label for="{{ field.id_for_label }}" class="block text-gray-700 text-sm font-bold mb-2">{{ field.label }}</label>
+                    {{ field }}
+                   
+                </div>
+            {% endfor %}
+            <button type="submit" class="bg-green-500 my-2 text-white px-4 py-2 rounded w-full">Login</button>
+        </form>
+    </div>
+</div>
+
+{% endblock content %}

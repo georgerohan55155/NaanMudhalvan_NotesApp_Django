@@ -1,0 +1,126 @@
+{% extends 'layout/layout.html' %}
+
+{% block title %}
+Dashboard | Noter
+{% endblock title %}
+
+{% block Style %}
+<style>
+    /* Add border styles for form fields */
+    input[type="text"],
+    input[type="textarea"] {
+        border: 1px solid #ced4da; /* Border color */
+        border-radius: 0.25rem; /* Border radius */
+        padding: 0.375rem 0.75rem; /* Padding */
+        width: 100%; /* Full width */
+    }
+
+    /* Add focus styles for form fields */
+    input[type="text"]:focus,
+    input[type="password"]:focus,
+    input[type="email"]:focus {
+        border-color: #80bdff; /* Border color on focus */
+        outline: 0; /* Remove outline */
+        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25); /* Add shadow on focus */
+    }
+</style>
+{% endblock Style %}
+
+{% block content %}
+<nav class="bg-gray-200 shadow shadow-gray-300">
+    <div class="container mx-auto px-8 md:px-4 py-4 flex items-center justify-between">
+        <!-- Logo -->
+        <a href="/" class="text-green-500  ml-[5%] font-bold text-[20px]">
+            <p>Noter</p>
+        </a>
+
+        <div class="flex gap-3 w-[35%]">
+            <a href="" class="px-4 py-2 flex flex-row gap-2 ">
+                <div class=" rounded-[50%] bg-green-500 w-[25px] h-[25px] flex justify-center items-center text-black text-[15px] decoration-none">
+                    {{ user.username|first|upper }}
+                </div>
+                {{ user.username }}</a>
+            <a href="/logout/" class="px-4 py-1  bg-green-500 hover:bg-green-600 text-gray-50 rounded-[5px] font-semibold flex items-center gap-2">
+                
+                <span>Logout</span>
+            </a>
+        </div>
+    </div>
+</nav>
+
+<div class="container mx-auto py-8 flex flex-col items-center justify-center">
+
+    <h2 class="text-3xl font-semibold mb-4 bg-gray-300 w-full text-center p-2">Welcome, {{ user.username }} !</h2>
+
+    {% if user_type %}
+        {% if user_type.user_type == 'teacher' %}
+            <div class="overflow-x-auto text-center mb-8">
+                <h3 class="text-2xl font-semibold mb-2">Uploaded Notes</h3>
+                <table class="table-auto w-full">
+                    <thead>
+                        <tr>
+                            <th class="px-4 py-2 bg-blue-200">Title</th>
+                            <th class="px-4 py-2 bg-blue-200">Category</th>
+                            <!-- Add more table headers as needed -->
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for note in notes %}
+                            <tr>
+                                <td class="px-4 py-2">{{ note.title }}</td>
+                                <td class="px-4 py-2">{{ note.category }}</td>
+                                <!-- Display other note details as needed -->
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="overflow-x-auto text-center mb-8 border rounded-xl p-10">
+                <h3 class="text-2xl font-semibold mt-8 mb-2">Upload Note:</h3>
+                <form method="post" enctype="multipart/form-data" class="max-w-lg mx-auto">
+                    {% csrf_token %}
+                    <div class="mb-4">
+                        <label for="title" class="block text-gray-700 text-sm font-bold mb-2">Title:</label>
+                        <input type="text" id="title" name="title" class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                    </div>
+                    <div class="mb-4">
+                        <label for="category" class="block text-gray-700 text-sm font-bold mb-2">Category:</label>
+                        <input type="text" id="category" name="category" class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                    </div>
+                    <div class="mb-4">
+                        <label for="description" class="block text-gray-700 text-sm font-bold mb-2">Description:</label>
+                        <textarea id="description" name="description" class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"></textarea>
+                    </div>
+                    <div class="mb-4">
+                        <label for="file" class="block text-gray-700 text-sm font-bold mb-2">Upload File:</label>
+                        <input type="file" id="file" name="file" accept=".pdf,.doc,.docx" class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                    </div>
+                    <button type="submit" class="bg-green-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Upload</button>
+                </form>
+            </div>
+        {% else %}
+        <div class="container mx-auto py-8 flex flex-col items-center py-[2%] justify-center">
+            
+
+            <div class=" w-full flex items-center justify-center px-[5%]">
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 ">
+                    {% for note in notes %}
+                    <div class="bg-white  border h-[30vh] rounded-md px-[5%] py-[6%] relative cursor-pointer hover:shadow-md">
+                        <h4 class="text-[18px] font-semibold mb-2">{{ note.title }}</h4>
+                        <p class="text-[14px] text-gray-600 my-4">{{ note.description }}</p>
+
+                        <div class="absolute text-[14px] bg-green-500 rounded-[5px] text-white bottom-[10%] right-[10%] py-[2%] px-[5%] hover:shadow-md">
+                            <a href="{{ note.file.url }}" class="text-white " download="">Download</a>
+                        </div>
+
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>        
+        {% endif %}
+    {% else %}
+        <p class="text-xl">No user type information available.</p>
+    {% endif %}
+</div>
+{% endblock content %}

@@ -1,0 +1,58 @@
+{% extends 'layout/layout.html' %}
+
+{% block title %}
+About | Noter
+{% endblock title %}
+
+{% block Style %}
+<style>
+
+  h1, h2 {
+    font-weight: 700;
+    font-size: 20px;
+  }
+  
+  h1 {
+    font-size: 2em;
+  }
+  
+  main {
+    margin-left: 10px;
+    padding: 20px;
+  }
+  
+  p {
+    line-height: 1.5;
+  }
+  
+  ul {
+    list-style: disc;
+    padding-left: 20px;
+  }
+  
+
+</style>
+  
+{% endblock Style %}
+
+{% block content %}
+<main style="padding: 10px;">
+    <h2 style="font-weight: 700;font-size: 20px;">About Spark</h2>
+    <p>
+      Spark is a revolutionary notes app designed to empower teams and individuals to capture, organize, and share knowledge seamlessly. We believe that effective communication and collaboration are essential for success in today's fast-paced world. However, many traditional note-taking applications fall short, hindering collaboration and creating a frustrating experience.
+    </p>
+    <p>
+      That's where Spark comes in. We offer a suite of features specifically designed to address the limitations of existing solutions. Here's what sets us apart:
+    </p>
+    <ul>
+      <li>Real-time co-editing: Work on the same note with your team, and see changes instantly.</li>
+      <li>Intuitive organization: Organize your notes with folders and tags for easy retrieval.</li>
+      <li>Granular access control: Control who can view, edit, or share your notes.</li>
+      <li>Robust security: Keep your notes safe with secure user authentication and data encryption.</li>
+    </ul>
+    <p>
+      Spark is more than just a note-taking app; it's a catalyst for a collaborative future. We empower you to streamline communication, boost productivity, and achieve more together.
+    </p>
+  </main>
+{% endblock content %}
+
